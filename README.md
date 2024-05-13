@@ -26,18 +26,19 @@ As easy as this:
 from qcentroid_runtime_qiskit import QCentroidRuntimeQiskit
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
 
 def main():
     
     # Get the solver details
     qcentroid_qiskit = QCentroidRuntimeQiskit.get_instance() # with optional params
 
-    print(f"currentVersion:{QCentroidRuntimeQiskit.getVersion()}")
+    logger.info(f"currentVersion:{QCentroidRuntimeQiskit.getVersion()}")
     QCentroidRuntimeQiskit.execute(circuit)
     
     
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.DEBUG)
     main() 
 ```
 
