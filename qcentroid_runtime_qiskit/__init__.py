@@ -6,8 +6,6 @@ logger = logging.getLogger(__name__)
 
 class QCentroidRuntimeQiskit:
     _singleton = None
-    _token = None
-    _instance = None
 
     @staticmethod
     def getVersion() -> str:
@@ -22,25 +20,22 @@ class QCentroidRuntimeQiskit:
 
         return "unknown"
 
-    def __init__(self):
-        raise RuntimeError("Call configure() instead")
+    def __init__(self, params):
+        if "token" in params:
+            self.__token = params.get("token", "")
+        if "instance" in params:
+            self.__instance = params.get("instance", "")
 
     @classmethod
-    def configure(cls, params: dict = {}):
+    def get_instance(cls, params):
         if cls._singleton is None:
-            print("Creating new instance")
-            cls._singleton = cls.__new__(cls)
-            # Put any initialization here.
-            if params:
-                if "token" in params:
-                    cls._token = dict["token"]
-                if "instance" in params:
-                    cls._instance = dict["instance"]
-        return cls._instance
+            cls._singleton = cls(params)
+        return cls._singleton
 
     @classmethod
     def execute(cls, circuit):
         # TODO write execution code
+        # use self.__token and self.__instance hidden variables
         pass
 
 
