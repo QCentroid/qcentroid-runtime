@@ -31,7 +31,7 @@ logging.basicConfig(level=logging.DEBUG)
 def main():
     
     # Get the solver details
-    qcentroid_qiskit = QCentroidRuntimeQiskit.configure()
+    qcentroid_qiskit = QCentroidRuntimeQiskit.get_instance() # with optional params
 
     print(f"currentVersion:{QCentroidRuntimeQiskit.getVersion()}")
     QCentroidRuntimeQiskit.execute(circuit)
