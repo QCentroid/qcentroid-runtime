@@ -31,10 +31,10 @@ logger = logging.getLogger(__name__)
 def main():
     
     # Get the solver details
-    qcentroid_qiskit = QCentroidRuntimeQiskit.get_instance() # with optional params
+    QCentroidRuntimeQiskit.get_instance() # with optional params
 
     logger.info(f"currentVersion:{QCentroidRuntimeQiskit.getVersion()}")
-    qcentroid_qiskit.execute(circuit)
+    QCentroidRuntimeQiskit.execute(circuit)
     
     
 if __name__ == "__main__":
