@@ -3,7 +3,7 @@
 ![deploy to pypi](https://github.com/QCentroid/qcentroid-runtime-qiskit/actions/workflows/publish.yml/badge.svg)
 [![Python](https://img.shields.io/pypi/pyversions/qcentroid-runtime-qiskit.svg)](https://badge.fury.io/py/qcentroid-runtime-qiskit)
 [![PyPI](https://badge.fury.io/py/qcentroid-runtime-qiskit.svg)](https://badge.fury.io/py/qcentroid-runtime-qiskit)
- 
+ [![CodeFactor](https://www.codefactor.io/repository/github/qcentroid/qcentroid-runtime-qiskit/badge)](https://www.codefactor.io/repository/github/qcentroid/qcentroid-runtime-qiskit)
 QCentroid library to interact with Qiskit
 
 
