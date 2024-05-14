@@ -31,8 +31,9 @@ class QCentroidRuntimeQiskit:
         if cls._singleton is None:
             cls._singleton = cls(params)
         return cls._singleton
-
-    def execute(self, circuit):
+    @classmethod
+    def execute(cls, circuit):
+        self = cls.get_instance()
         # TODO write execution code
         # use self.__token and self.__instance hidden variables
         pass
