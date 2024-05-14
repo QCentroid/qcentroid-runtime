@@ -34,7 +34,7 @@ def main():
     qcentroid_qiskit = QCentroidRuntimeQiskit.get_instance() # with optional params
 
     logger.info(f"currentVersion:{QCentroidRuntimeQiskit.getVersion()}")
-    QCentroidRuntimeQiskit.execute(circuit)
+    qcentroid_qiskit.execute(circuit)
     
     
 if __name__ == "__main__":
