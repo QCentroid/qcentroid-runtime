@@ -1,8 +1,10 @@
 import sys
 import logging
-
+import os
 logger = logging.getLogger(__name__)
+__all__=['providers']
 
+import qcentroid_runtime_qiskit.providers as providers
 
 class QCentroidRuntimeQiskit:
     _singleton = None
@@ -20,11 +22,17 @@ class QCentroidRuntimeQiskit:
 
         return "unknown"
 
+    def __get_provider(self,params):
+        provider_name=params.get("provider","IBMQuantum")
+        if provider_name == 'IBMQuantum':
+            print(params)
+            self.__provider=providers.IBMQuantum(params)
+        
+        
+
     def __init__(self, params):
-        if "token" in params:
-            self.__token = params.get("token", "")
-        if "instance" in params:
-            self.__instance = params.get("instance", "")
+        self.__get_provider(params)
+        
 
     @classmethod
     def get_instance(cls, params: dict = {}):
@@ -34,9 +42,8 @@ class QCentroidRuntimeQiskit:
     @classmethod
     def execute(cls, circuit):
         self = cls.get_instance()
-        # TODO write execution code
-        # use self.__token and self.__instance hidden variables
-        pass
+        return self.__provider.execute(circuit)
 
 
+    
 __all__ = ["QCentroidRuntimeQiskit"]
