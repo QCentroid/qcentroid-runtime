@@ -1,15 +1,13 @@
-from .QiskitAbstractProvider import QiskitAbstractProvider
+from .QiskitRuntimeAbstractProvider import QiskitRuntimeAbstractProvider
 from qiskit_ibm_runtime import QiskitRuntimeService
 
-class IBMQuantum(QiskitAbstractProvider):
-    def __init__(self,params):
-        self.__params=params
-        super().__init__(params)
+class IBMQuantum(QiskitRuntimeAbstractProvider):
     def get_provider(self):
         return "IBMQuantum"
     def _get_service(self):
-        print(self.__params)
-        params=self.__params
+        if(self._service is not None):
+            return self._service
+        params=self._get_params()
         if "IBMQuantumToken" in params:
             self.__token = params.get("IBMQuantumToken", "")
         else:
@@ -18,4 +16,8 @@ class IBMQuantum(QiskitAbstractProvider):
             self.__instance = params.get("IBMQuantumInstance", "")
         else:
            raise Exception("No instance provided") 
-        return QiskitRuntimeService(channel='ibm_quantum',token=self.__token,instance=self.__instance)
+        self._service= QiskitRuntimeService(channel='ibm_quantum',token=self.__token,instance=self.__instance)
+        return self._service
+
+
+

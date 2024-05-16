@@ -25,8 +25,11 @@ class QCentroidRuntimeQiskit:
     def __get_provider(self,params):
         provider_name=params.get("provider","IBMQuantum")
         if provider_name == 'IBMQuantum':
-            print(params)
             self.__provider=providers.IBMQuantum(params)
+        elif provider_name == 'IBMCloud':
+            self.__provider=providers.IBMCloud(params)
+        elif provider_name == 'QCtrlEmbedded':
+            self.__provider=providers.QCtrlEmbedded(params)
         
         
 
@@ -38,6 +41,11 @@ class QCentroidRuntimeQiskit:
     def get_instance(cls, params: dict = {}):
         if cls._singleton is None:
             cls._singleton = cls(params)
+        return cls._singleton
+
+    def __new__(cls, *args, **kwargs):
+        if cls._singleton is None:
+            cls._singleton = super(QCentroidRuntimeQiskit, cls).__new__(cls)
         return cls._singleton
     @classmethod
     def execute(cls, circuit):
