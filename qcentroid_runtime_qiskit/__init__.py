@@ -30,6 +30,8 @@ class QCentroidRuntimeQiskit:
             self.__provider=providers.IBMCloud(params)
         elif provider_name == 'QCtrlEmbedded':
             self.__provider=providers.QCtrlEmbedded(params)
+        elif provider_name == 'IonQ':
+            self.__provider=providers.IonQ(params)
         
         
 

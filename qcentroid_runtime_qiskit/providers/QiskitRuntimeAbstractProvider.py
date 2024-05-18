@@ -4,7 +4,7 @@ try:
 except:
     import sys
     import subprocess
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit_ibm_runtime'])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit-ibm-runtime'])
     import qiskit_ibm_runtime
     
 from abc import ABC, abstractmethod
@@ -26,9 +26,8 @@ class QiskitRuntimeAbstractProvider(QiskitAbstractProvider):
     def __init__(self,params):
         self.__params=params
         if "backend" in params:
-           self.__backend_name = params.get("backend", "") 
-        self.__qcentroid_job_id = None    
-        self.__qcentroid_job_id = params.get("qcentroid_job_id", None) 
+           self.__backend_name = params.get("backend", "")  
+        self._qcentroid_job_id = params.get("qcentroid_job_id", None) 
 
     def _get_params(self):
         return self.__params
@@ -64,8 +63,8 @@ class QiskitRuntimeAbstractProvider(QiskitAbstractProvider):
         shots=1000 #hyperparameters.getparameter('shots')
         job=sampler.run(isa_qc,shots=shots)
         ids['Job']=job.job_id()
-        if self.__qcentroid_job_id is not None:
-            with open(str(self.__qcentroid_job_id), 'w') as convert_file: 
+        if self._qcentroid_job_id is not None:
+            with open(str(self._qcentroid_job_id), 'w') as convert_file: 
                 convert_file.write(json.dumps(ids))
         #insertar la relacion entre QCentroidJob y IBMJob
         result=job.result()

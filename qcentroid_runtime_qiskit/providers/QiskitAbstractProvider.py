@@ -13,8 +13,8 @@ class QiskitAbstractProvider(ABC):
         self.__params=params
         if "backend" in params:
            self.__backend_name = params.get("backend", "") 
-        self.__qcentroid_job_id = None    
-        self.__qcentroid_job_id = params.get("qcentroid_job_id", None) 
+
+        self._qcentroid_job_id = params.get("qcentroid_job_id", None) 
 
     def _get_params(self):
         return self.__params
@@ -24,6 +24,6 @@ class QiskitAbstractProvider(ABC):
         pass
 
 
-    
+    @abstractmethod  
     def execute(self,circuit):
         pass
