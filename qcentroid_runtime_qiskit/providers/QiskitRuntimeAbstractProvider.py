@@ -1,16 +1,6 @@
 from .QiskitAbstractProvider import QiskitAbstractProvider
-try:
-    import qiskit_ibm_runtime
-except:
-    import sys
-    import subprocess
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit-ibm-runtime'])
-    import qiskit_ibm_runtime
-    
 from abc import ABC, abstractmethod
-from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
-from qiskit_ibm_runtime import Sampler,Session
-from qiskit_ibm_runtime import QiskitRuntimeService
+
 import json
 
 class QiskitRuntimeAbstractProvider(QiskitAbstractProvider):
@@ -48,6 +38,16 @@ class QiskitRuntimeAbstractProvider(QiskitAbstractProvider):
 
     
     def execute(self,circuit):
+        try:
+            import qiskit_ibm_runtime
+        except:
+            import sys
+            import subprocess
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit-ibm-runtime'])
+            import qiskit_ibm_runtime
+        from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
+        from qiskit_ibm_runtime import Sampler,Session
+        from qiskit_ibm_runtime import QiskitRuntimeService
         ids={}
         
         self.__service = self._get_service()

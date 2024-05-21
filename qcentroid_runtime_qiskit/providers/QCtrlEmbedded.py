@@ -1,10 +1,10 @@
 from .QiskitRuntimeAbstractProvider import QiskitRuntimeAbstractProvider
-from qiskit_ibm_runtime import QiskitRuntimeService
 
 class QCtrlEmbedded(QiskitRuntimeAbstractProvider):
     def get_provider(self):
         return "QCtrlEmbedded"
     def _get_service(self):
+        from qiskit_ibm_runtime import QiskitRuntimeService
         if(self._service is not None):
             return self._service
         params=self._get_params()

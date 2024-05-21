@@ -1,10 +1,11 @@
 from .QiskitRuntimeAbstractProvider import QiskitRuntimeAbstractProvider
-from qiskit_ibm_runtime import QiskitRuntimeService
+
 
 class IBMQuantum(QiskitRuntimeAbstractProvider):
     def get_provider(self):
         return "IBMQuantum"
     def _get_service(self):
+        from qiskit_ibm_runtime import QiskitRuntimeService
         if(self._service is not None):
             return self._service
         params=self._get_params()

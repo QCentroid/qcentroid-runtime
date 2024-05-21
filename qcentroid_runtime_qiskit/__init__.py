@@ -24,14 +24,11 @@ class QCentroidRuntimeQiskit:
 
     def __get_provider(self,params):
         provider_name=params.get("provider","IBMQuantum")
-        if provider_name == 'IBMQuantum':
-            self.__provider=providers.IBMQuantum(params)
-        elif provider_name == 'IBMCloud':
-            self.__provider=providers.IBMCloud(params)
-        elif provider_name == 'QCtrlEmbedded':
-            self.__provider=providers.QCtrlEmbedded(params)
-        elif provider_name == 'IonQ':
-            self.__provider=providers.IonQ(params)
+        import inspect
+        p=[x[1] for x in inspect.getmembers(providers, predicate=inspect.isclass) if x[0]==provider_name]
+        if (len(p)==0):
+            raise Exception ('Provider: '+provider_name+' is not valid')
+        self.__provider=p[0](params)
         
         
 

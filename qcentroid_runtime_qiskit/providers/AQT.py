@@ -1,7 +1,8 @@
 from .QiskitAbstractProvider import QiskitAbstractProvider
 
+import qiskit
 import json
-class IonQ(QiskitAbstractProvider):
+class AQT(QiskitAbstractProvider):
     def __init__(self,params):
         self.__params=params
         if "backend" in params:
@@ -9,31 +10,31 @@ class IonQ(QiskitAbstractProvider):
         self._qcentroid_job_id = params.get("qcentroid_job_id", None) 
 
     def get_provider(self):
-        return 'IonQ'
+        return 'AQT'
     def _get_backend(self):
-        try:
-            from qiskit_ionq import IonQProvider
-        except:
-            import sys
-            import subprocess
-            subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit-ionq'])
-            from qiskit_ionq import IonQProvider
-        
-        provider = IonQProvider(token=self.__params.get('IonQ_API_Key',""))
+        from qiskit_aqt_provider import AQTProvider
+        provider = AQTProvider(self.__params.get('AQT_AccessToken',"ACCESS_TOKEN"))
         backend=provider.get_backend(self.__backend_name)
-        backend.options.noise_model=self.__params.get('IonQ_Noise_Model',"ideal")
         return backend
                                                         
     def execute(self,circuit):
+        try:
+            from qiskit_aqt_provider.primitives import AQTSampler        
+        except:
+            import sys
+            import subprocess
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit-aqt-provider'])
+            from qiskit_aqt_provider.primitives import AQTSampler        
         backend=self._get_backend()
-        job=backend.run(circuit)
+        sampler=AQTSampler(backend)
+        sampler.set_transpile_options(optimization_level=3)
+        job=sampler.run(circuit)
         ids={}
-        ids['IonQ Job ID']=job.job_id()
-        job.wait_for_final_state()
+        ids['AQT Job ID']=job.job_id()
         if self._qcentroid_job_id is not None:
             with open(str(self._qcentroid_job_id), 'w') as convert_file: 
                 convert_file.write(json.dumps(ids))
-        return job.get_probabilities()
+        return job.result().quasi_dists[0]
 
     
     
