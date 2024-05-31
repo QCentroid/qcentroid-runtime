@@ -32,7 +32,14 @@ class QCentroidRuntimeQiskit:
         
         
 
-    def __init__(self, params):
+    def __init__(self, params=None):
+        try:
+            import qiskit
+        except:
+            import sys
+            import subprocess
+            subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit'])
+            import qiskit
         self.__get_provider(params)
         
 
