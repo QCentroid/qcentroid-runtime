@@ -25,16 +25,18 @@ class AQT(QiskitAbstractProvider):
             import subprocess
             subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit-aqt-provider'])
             from qiskit_aqt_provider.primitives import AQTSampler        
+        from qiskit.primitives import SamplerResult
         backend=self._get_backend()
+        shots=self.__params.get('shots',1000)
         sampler=AQTSampler(backend)
         sampler.set_transpile_options(optimization_level=3)
-        job=sampler.run(circuit)
+        job=sampler.run(circuit,shots=shots)
         ids={}
         ids['AQT Job ID']=job.job_id()
         if self._qcentroid_job_id is not None:
             with open(str(self._qcentroid_job_id), 'w') as convert_file: 
                 convert_file.write(json.dumps(ids))
-        return job.result().quasi_dists[0]
+        return SamplerResult([job.result().quasi_dists[0]],[{'shots':shots}])
 
     
     

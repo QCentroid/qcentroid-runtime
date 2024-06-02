@@ -25,7 +25,10 @@ class IonQ(QiskitAbstractProvider):
         return backend
                                                         
     def execute(self,circuit):
+        from qiskit.primitives import SamplerResult
+        shots=self.__params.get('shots',1000)
         backend=self._get_backend()
+        backend.set_options(**{'shots':shots})
         job=backend.run(circuit)
         ids={}
         ids['IonQ Job ID']=job.job_id()
@@ -33,7 +36,8 @@ class IonQ(QiskitAbstractProvider):
         if self._qcentroid_job_id is not None:
             with open(str(self._qcentroid_job_id), 'w') as convert_file: 
                 convert_file.write(json.dumps(ids))
-        return job.get_probabilities()
+        r= {int(x,2):y for x,y in job.get_probabilities().items()}
+        return SamplerResult([r],[{'shots':shots}])
 
     
     

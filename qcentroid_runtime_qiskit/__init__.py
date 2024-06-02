@@ -5,8 +5,15 @@ logger = logging.getLogger(__name__)
 __all__=['providers']
 
 import qcentroid_runtime_qiskit.providers as providers
+class SingletonMeta(type):
+    _instances = {}
 
-class QCentroidRuntimeQiskit:
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(SingletonMeta, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+class QCentroidRuntimeQiskit(metaclass=SingletonMeta):
     _singleton = None
 
     @staticmethod
@@ -41,21 +48,8 @@ class QCentroidRuntimeQiskit:
             subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'qiskit'])
             import qiskit
         self.__get_provider(params)
-        
 
-    @classmethod
-    def get_instance(cls, params: dict = {}):
-        if cls._singleton is None:
-            cls._singleton = cls(params)
-        return cls._singleton
-
-    def __new__(cls, *args, **kwargs):
-        if cls._singleton is None:
-            cls._singleton = super(QCentroidRuntimeQiskit, cls).__new__(cls)
-        return cls._singleton
-    @classmethod
-    def execute(cls, circuit):
-        self = cls.get_instance()
+    def execute(self, circuit):
         return self.__provider.execute(circuit)
 
 
