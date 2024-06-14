@@ -162,3 +162,5 @@ cython_debug/
 *.txt
 main.py
 test
+test
+test
