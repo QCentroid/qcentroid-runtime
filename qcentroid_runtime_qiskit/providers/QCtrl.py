@@ -70,7 +70,7 @@ class AQT(QiskitAbstractProvider):
         backend=self._get_backend()
         shots=self.__params.get('shots',1000)
         circuit_qasm=qiskit.qasm3.dumps(circuit)        
-        job=fireopal.execute(circuits=[circuit_qasm],shot_count=shots=shots,credentials=credentials,backend_name=backend)
+        job=fireopal.execute(circuits=[circuit_qasm],shot_count=shots,credentials=credentials,backend_name=backend)
         ids={}
         ids['FireOpal Job ID']=job.action_id
         if self._qcentroid_job_id is not None:
