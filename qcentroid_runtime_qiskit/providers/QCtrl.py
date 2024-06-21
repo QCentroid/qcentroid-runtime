@@ -44,7 +44,7 @@ class AQT(QiskitAbstractProvider):
            raise Exception("No instance provided") 
         hub,group,project=self.__instance.split('/')
         credentials = fireopal.credentials.make_credentials_for_ibmq(
-            token=token, hub=hub, group=group, project=project
+            token=self.__token, hub=hub, group=group, project=project
         )
         return credentials
     def execute(self,circuit):
@@ -76,7 +76,7 @@ class AQT(QiskitAbstractProvider):
         if self._qcentroid_job_id is not None:
             with open(str(self._qcentroid_job_id), 'w') as convert_file: 
                 convert_file.write(json.dumps(ids))
-        r= {int(x,2):y for x,y in fire_opal_job.result()['results'][0].items()}
+        r= {int(x,2):y for x,y in job.result()['results'][0].items()}
         return SamplerResult([r],[{'shots':shots}])
     
     
