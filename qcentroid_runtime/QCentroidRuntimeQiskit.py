@@ -2,17 +2,9 @@ import sys
 import logging
 import os
 logger = logging.getLogger(__name__)
-__all__=['providers']
-
-import qcentroid_runtime_qiskit.providers as providers
-class SingletonMeta(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(SingletonMeta, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
+__all__=['qiskit']
+import qcentroid_runtime.qiskit as providers
+from qcentroid_runtime import SingletonMeta
 class QCentroidRuntimeQiskit(metaclass=SingletonMeta):
     _singleton = None
 
@@ -51,7 +43,3 @@ class QCentroidRuntimeQiskit(metaclass=SingletonMeta):
 
     def execute(self, circuit):
         return self.__provider.execute(circuit)
-
-
-    
-__all__ = ["QCentroidRuntimeQiskit"]

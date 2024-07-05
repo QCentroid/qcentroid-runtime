@@ -44,7 +44,7 @@ class AQT(QiskitAbstractProvider):
            raise Exception("No instance provided") 
         hub,group,project=self.__instance.split('/')
         credentials = fireopal.credentials.make_credentials_for_ibmq(
-            token=token, hub=hub, group=group, project=project
+            token=self.__token, hub=hub, group=group, project=project
         )
         return credentials
     def execute(self,circuit):

@@ -11,14 +11,13 @@ classifiers = [
     ]
 license = "MIT License"
 readme = "README.md"
-packages = [{include = "qcentroid_runtime_qiskit"}]
+packages = [{include = "qcentroid_runtime"}]
 homepage = "https://www.qcentroid.xyz"
 repository = "https://github.com/QCentroid/qcentroid-runtime-qiskit"
 documentation = "https://github.com/QCentroid/qcentroid-runtime-qiskit"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-qiskit-ibm-runtime = "~=0.23"
 pytest ={version="~7.4", optional = true}
 
 [tool.poetry.group.test]  # Group definition
