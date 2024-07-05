@@ -70,13 +70,13 @@ class AQT(QiskitAbstractProvider):
         backend=self._get_backend()
         shots=self.__params.get('shots',1000)
         circuit_qasm=qiskit.qasm3.dumps(circuit)        
-        job=fireopal.execute(circuits=[circuit_qasm],shot_count=shots=shots,credentials=credentials,backend_name=backend)
+        job=fireopal.execute(circuits=[circuit_qasm],shot_count=shots,credentials=credentials,backend_name=backend)
         ids={}
         ids['FireOpal Job ID']=job.action_id
         if self._qcentroid_job_id is not None:
             with open(str(self._qcentroid_job_id), 'w') as convert_file: 
                 convert_file.write(json.dumps(ids))
-        r= {int(x,2):y for x,y in fire_opal_job.result()['results'][0].items()}
+        r= {int(x,2):y for x,y in job.result()['results'][0].items()}
         return SamplerResult([r],[{'shots':shots}])
     
     
