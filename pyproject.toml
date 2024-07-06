@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "qcentroid-runtime-qiskit"
+name = "qcentroid-runtime"
 version = "0.1.4"
-description = "Library to interact with qcentroid qiskit runtime"
+description = "Library to interact with QCentroid runtime"
 authors = [
   "QCentroid <info@qcentroid.xyz>" ]
 classifiers = [

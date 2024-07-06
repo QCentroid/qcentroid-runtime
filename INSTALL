@@ -1,0 +1,2 @@
+python -m build
+pip install dist\qcentroid_runtime-0.1.4-py3-none-any.whl --force-reinstall
